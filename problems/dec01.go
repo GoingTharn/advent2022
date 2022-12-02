@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"log"
-	"os"
 	"runtime/debug"
 	"sort"
 	"strconv"
@@ -38,16 +37,6 @@ func Problem1() {
 func testInput() []byte {
 	test_input := []byte("100\n200\n300\n\n100\n\n900")
 	return test_input
-}
-
-func getInput(path string) ([]byte, error) {
-	//Get the response bytes from the url
-	contents, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	return contents, err
 }
 
 func parseInput(contents []byte) (elves []elf) {
