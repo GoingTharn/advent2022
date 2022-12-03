@@ -11,6 +11,7 @@ func buildProblems() map[string]func() {
 	pm := make(map[string]func())
 	pm["Problem1"] = problems.Problem1
 	pm["Problem2"] = problems.Problem2
+	pm["Problem3"] = problems.Problem3
 	return pm
 }
 
