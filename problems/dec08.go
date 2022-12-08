@@ -12,8 +12,9 @@ type TreeGrid [][]Tree
 type ProblemInput []byte
 
 type Tree struct {
-	Height  int
-	Visible bool
+	Height      int
+	Visible     bool
+	ScenicScore int
 }
 
 func (t Tree) String() string {
@@ -65,134 +66,101 @@ func BuildTreeGrid(p ProblemInput) (tg TreeGrid) {
 
 func (tg *TreeGrid) CheckVisibility() {
 	for i, treeList := range *tg {
-		for j, tree := range treeList {
-			tg.CheckUp(i, j)
-			if tree.Visible == true {
-				continue
-			}
-			tg.CheckDown(i, j)
-			if tree.Visible == true {
-				continue
-			}
-			tg.CheckLeft(i, j)
-			if tree.Visible == true {
-				continue
-			}
-			tg.CheckRight(i, j)
-			if tree.Visible == true {
-				continue
-			}
+		for j := range treeList {
+			up := tg.CheckUp(i, j)
+			down := tg.CheckDown(i, j)
+			left := tg.CheckLeft(i, j)
+			right := tg.CheckRight(i, j)
+			(*tg)[i][j].ScenicScore = up * down * left * right
 		}
 	}
 }
 
-func (tg *TreeGrid) CheckUp(y, x int) {
+func (tg *TreeGrid) CheckUp(y, x int) int {
 	candidate := (*tg)[y][x]
 	//fmt.Printf("Candidate: %s (%d, %d)\n", candidate.Print(), y, x)
 	if y == len((*tg))-1 {
 		// edge, always visible
 		candidate.Visible = true
 		(*tg)[y][x] = candidate
-		return
+		return 0
 	}
-	max := 0
 	for i := y - 1; i >= 0; i-- {
-		if max < (*tg)[i][x].Height {
-			max = (*tg)[i][x].Height
+		if candidate.Height <= (*tg)[i][x].Height {
+			return y - i
 		}
 	}
-	if candidate.Height > max {
-		candidate.Visible = true
-		(*tg)[y][x] = candidate
-		return
-	}
+	return y
 }
 
-func (tg *TreeGrid) CheckDown(y, x int) {
+func (tg *TreeGrid) CheckDown(y, x int) int {
 	candidate := (*tg)[y][x]
 	//fmt.Printf("Candidate: %s\n", candidate.Print())
 	if y == 0 {
 		// edge, always visible
 		candidate.Visible = true
 		(*tg)[y][x] = candidate
-		return
+		return 0
 	}
-	max := 0
 	for i := y + 1; i < len((*tg)); i++ {
-		if max < (*tg)[i][x].Height {
-			max = (*tg)[i][x].Height
+		if candidate.Height <= (*tg)[i][x].Height {
+			return i - y
 		}
 	}
-	if candidate.Height > max {
-		candidate.Visible = true
-		(*tg)[y][x] = candidate
-		return
-	}
-
+	return len((*tg)) - 1 - y
 }
 
-func (tg *TreeGrid) CheckLeft(y, x int) {
+func (tg *TreeGrid) CheckLeft(y, x int) int {
 	candidate := (*tg)[y][x]
 	//fmt.Printf("Candidate: %s\n", candidate.Print())
 	if x == len((*tg)[y])-1 {
 		// edge, always visible
 		candidate.Visible = true
 		(*tg)[y][x] = candidate
-		return
+		return 0
 	}
-	max := 0
 	for i := x - 1; i >= 0; i-- {
 		//fmt.Printf("i: %d, y:%d check: %s \n", i, y, (*tg)[i][x].Print())
-		if max < (*tg)[y][i].Height {
-			max = (*tg)[y][i].Height
+		if candidate.Height <= (*tg)[y][i].Height {
+			return x - i
 		}
 	}
-	if candidate.Height > max {
-		candidate.Visible = true
-		(*tg)[y][x] = candidate
-		return
-	}
+	return x
 }
 
-func (tg *TreeGrid) CheckRight(y, x int) {
+func (tg *TreeGrid) CheckRight(y, x int) int {
 	candidate := (*tg)[y][x]
 	//fmt.Printf("Candidate: %s\n", candidate.Print())
 	if x == 0 {
 		// edge, always visible
 		candidate.Visible = true
 		(*tg)[y][x] = candidate
-		return
+		return 0
 	}
-	max := 0
 	for i := x + 1; i < len((*tg)[y]); i++ {
-		//fmt.Printf("i: %d, x:%d check: %s \n", i, x, (*tg)[y][i].Print())
-		if max < (*tg)[y][i].Height {
-			max = (*tg)[y][i].Height
+		if candidate.Height <= (*tg)[y][i].Height {
+			return i - x
 		}
 	}
-	//fmt.Printf("Max: %d  Candidate.Height: %d\n", max, candidate.Height)
-	if candidate.Height > max {
-		candidate.Visible = true
-		(*tg)[y][x] = candidate
-		return
-	}
+	return len((*tg)[y]) - 1 - x
 }
 
-func (tg TreeGrid) VisibleTrees() (totalVis int) {
-	(&tg).CheckVisibility()
-	for _, treeList := range tg {
-		for _, tree := range treeList {
-			if tree.Visible == true {
-				totalVis++
+func (tg TreeGrid) MaxScenicView() int {
+	tg.CheckVisibility()
+	maxVis := 0
+	for _, line := range tg {
+		for _, tree := range line {
+			if maxVis < tree.ScenicScore {
+				maxVis = tree.ScenicScore
 			}
 		}
 	}
-	return totalVis
+	return maxVis
 }
 
 func Problem8() {
 	raw, _ := getInput("input/problem8.txt")
 	tg := BuildTreeGrid(ProblemInput(raw))
-	fmt.Println(tg.VisibleTrees())
+	fmt.Println(tg.MaxScenicView())
 
 }
