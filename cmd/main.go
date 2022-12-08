@@ -15,6 +15,7 @@ func buildProblems() map[string]func() {
 	pm["Problem4"] = problems.Problem4
 	pm["Problem5"] = problems.Problem5
 	pm["Problem6"] = problems.Problem6
+	pm["Problem7"] = problems.Problem7
 	return pm
 }
 

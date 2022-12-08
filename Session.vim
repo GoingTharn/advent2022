@@ -60,12 +60,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 64 - ((63 * winheight(0) + 35) / 71)
+let s:l = 65 - ((64 * winheight(0) + 35) / 71)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 64
-normal! 020|
+keepjumps 65
+normal! 022|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 30 + 68) / 137)
