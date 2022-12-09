@@ -1,22 +1,19 @@
-package problems_test
+package problems
 
 import (
 	"fmt"
 	"testing"
-
-	"com.advent2022.goingtharn/problems"
 )
 
 func TestProblem8(t *testing.T) {
-	testInput := problems.ProblemInput(`30373
+	testInput := ProblemInput(`30373
 25512
 65332
 33549
 35390
 `)
 
-	tg := problems.BuildTreeGrid(testInput)
-	fmt.Println(tg)
+	tg := BuildTreeGrid(testInput)
 	if tg[0][2].Height != 3 {
 		fmt.Println(tg)
 		t.Fail()
@@ -28,7 +25,6 @@ func TestProblem8(t *testing.T) {
 
 	// check edge up
 	y, x := 1, 2
-	fmt.Printf("Y: %d X:%d\n", y, x)
 	actual := (&tg).CheckUp(y, x)
 	if actual != 1 {
 		fmt.Println(tg)
@@ -55,7 +51,6 @@ func TestProblem8(t *testing.T) {
 	}
 
 	y, x = 3, 2
-	fmt.Printf("Y: %d X:%d\n", y, x)
 	actual = (&tg).CheckUp(y, x)
 	if actual != 2 {
 		fmt.Println(tg)
