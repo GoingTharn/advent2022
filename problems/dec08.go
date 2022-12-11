@@ -47,7 +47,6 @@ func BuildTreeGrid(p ProblemInput) (tg TreeGrid) {
 	tg = make(TreeGrid, len(lines)-1)
 	for i, line := range lines {
 		if len(line) == 0 {
-			fmt.Println("Empty line")
 			continue
 		}
 		trees = []Tree{}

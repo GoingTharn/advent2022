@@ -9,9 +9,7 @@ func TestMoveRope(t *testing.T) {
 	h := buildSnake(2)
 	var g grid = make(map[node]bool)
 
-	fmt.Println("before")
 	h = h.moveStep(&g, "R")
-	fmt.Println("after")
 	if (*h.position).x != 1 {
 		fmt.Printf("Head didn't move as expected! %s\n", (*h.position))
 		t.Fail()

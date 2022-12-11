@@ -195,7 +195,6 @@ func Problem9() {
 }
 
 func buildSnake(length int) segment {
-	fmt.Println("Building Snake!")
 	var n node = node{x: 0, y: 0}
 	var tail segment = segment{position: &n}
 	var s *segment
@@ -205,7 +204,6 @@ func buildSnake(length int) segment {
 		s = addSegment(s)
 	}
 
-	fmt.Println("Snake Built!")
 	return *s
 }
 
@@ -228,7 +226,6 @@ func Process9(raw []byte) int {
 		}
 	}
 	count := countGrid(g)
-	fmt.Printf("Grid Size: %d", len(g))
 	return count
 }
 
