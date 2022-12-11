@@ -206,6 +206,4 @@ noop
 	}
 
 	DrawResults(c)
-	t.Fail()
-
 }
