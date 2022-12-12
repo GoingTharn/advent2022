@@ -3,9 +3,10 @@ package problems
 import (
 	"errors"
 	"fmt"
-	"golang.org/x/exp/slices"
 	"strconv"
 	"strings"
+
+	"golang.org/x/exp/slices"
 )
 
 type Clock struct {
@@ -126,7 +127,6 @@ func DrawResults(c Clock) {
 		}
 	}
 	fmt.Println(display.String())
-	fmt.Println(c.results)
 }
 
 func Problem10() {

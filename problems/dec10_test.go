@@ -21,7 +21,6 @@ addx -5
 			fmt.Printf("Time diverged! i: %d c.time %d\n", i, c.time)
 			t.Fail()
 		}
-		fmt.Println(c.results)
 		if expectedV[i-1] != c.results[i-1] {
 			fmt.Printf("Expected: %d Got:%d at Tick: %d\n", expectedV[i], c.results[i], i)
 			t.Fail()
