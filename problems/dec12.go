@@ -101,11 +101,25 @@ func checkNeighbors(en elevationNode, em ElevationMap) []elevationNode {
 }
 
 func getShortest(raw []byte) int64 {
-	em, vertices, S, E := buildArray(raw)
+	em, vertices, _, E := buildArray(raw)
+
+	allAs := make([]elevationNode, 0)
+	for _, line := range em {
+		for _, v := range line {
+			if strings.ContainsAny(v.value, "Sa") == true {
+				allAs = append(allAs, v)
+			}
+		}
+	}
 	eg := buildGraph(em, vertices)
-	path, dist := graph.ShortestPath(eg, S.address, E.address)
-	fmt.Println("path:", path, "length:", dist)
-	return dist
+	shortest := int64(490)
+	for _, a := range allAs {
+		_, dist := graph.ShortestPath(eg, a.address, E.address)
+		if dist <= shortest && dist != int64(-1) {
+			shortest = dist
+		}
+	}
+	return shortest
 }
 
 func Problem12() {
