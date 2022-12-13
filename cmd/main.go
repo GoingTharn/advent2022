@@ -1,8 +1,9 @@
 package main
 
 import (
-	"com.advent2022.goingtharn/problems"
 	"flag"
+
+	"com.advent2022.goingtharn/problems"
 	//"fmt"
 	//"log"
 )
@@ -20,6 +21,7 @@ func buildProblems() map[string]func() {
 	pm["Problem9"] = problems.Problem9
 	pm["Problem10"] = problems.Problem10
 	pm["Problem11"] = problems.Problem11
+	pm["Problem12"] = problems.Problem12
 	return pm
 }
 
